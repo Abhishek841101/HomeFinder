@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className="bg-[#4A69E2] text-white">
+    <footer className="bg-[#fa6bee] text-black">
 
       {/* 🔥 TOP */}
       <div className="max-w-7xl mx-auto px-4 py-10">

@@ -11,7 +11,7 @@ import PricingSection from "../components/PricingSection";
 import VerifiedRentals from "../components/VerifiedRentals";
 export default function LandingPage() {
   return (
-    <div className="bg-white">
+    <div className="bg-gradient-to-br from-pink-50 via-white to-pink-100">
 
       {/* NAVBAR */}
       <Navbar />

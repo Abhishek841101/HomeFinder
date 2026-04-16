@@ -89,7 +89,6 @@
 
 
 
-
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 /* 🌍 PUBLIC */
@@ -98,11 +97,13 @@ import Properties from "./pages/Properties";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Login from "./pages/Login";
+import ReferralPage from "./pages/ReferralPage";
+import Checkout from "./pages/Checkout";
 
 /* 👤 USER */
 import UserProfile from "./pages/UserProfile";
 import UserDashboard from "./pages/UserDashboard";
-import PricingSection from "./components/PricingSection";
+import Subscription from "./pages/Subscription";
 
 /* 🛠️ ADMIN */
 import AdminDashboard from "./pages/AdminDashboard";
@@ -116,10 +117,7 @@ import AddListingDetails from "./pages/AddListingDetails";
 /* 🔐 ROUTES */
 import AdminRoute from "./components/AdminRoute";
 import ProtectedRoute from "./components/ProtectedRoute";
-import Subscription from "./pages/Subscription"; 
 
-
-import Checkout from "./pages/Checkout";
 function App() {
   return (
     <BrowserRouter>
@@ -131,12 +129,19 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
-<Route path="/checkout" element={<Checkout />} />
-        {/* 🏠 PROPERTY LISTING */}
+
+        {/* PAYMENT / REFERRAL */}
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/referral" element={<ReferralPage />} />
+
+        {/* PROPERTY FLOW */}
         <Route path="/add-listing" element={<AddListing />} />
         <Route path="/add-listing-details" element={<AddListingDetails />} />
-<Route path="/subscription" element={<Subscription />} />
-        {/* 👤 USER ROUTES */}
+
+        {/* SUBSCRIPTION */}
+        <Route path="/subscription" element={<Subscription />} />
+
+        {/* 👤 USER PROTECTED */}
         <Route
           path="/profile"
           element={
@@ -155,16 +160,7 @@ function App() {
           }
         />
 
-        <Route
-          path="/subscription"
-          element={
-            <ProtectedRoute>
-              <PricingSection />
-            </ProtectedRoute>
-          }
-        />
-
-        {/* 🛠️ ADMIN DASHBOARD */}
+        {/* 🛠️ ADMIN */}
         <Route
           path="/admin"
           element={
@@ -174,7 +170,6 @@ function App() {
           }
         />
 
-        {/* 🛠️ ADMIN PROFILE */}
         <Route
           path="/admin/profile"
           element={
@@ -184,7 +179,6 @@ function App() {
           }
         />
 
-        {/* ➕ ADD PROPERTY (ADMIN ONLY) */}
         <Route
           path="/add-property"
           element={
@@ -198,7 +192,7 @@ function App() {
         <Route
           path="*"
           element={
-            <div className="h-screen flex items-center justify-center text-xl">
+            <div className="h-screen flex items-center justify-center text-xl font-bold">
               404 - Page Not Found
             </div>
           }
