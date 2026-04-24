@@ -1,94 +1,3 @@
-
-// import { BrowserRouter, Routes, Route } from "react-router-dom";
-
-// import LandingPage from "./pages/LandingPage";
-// import Properties from "./pages/Properties";
-// import Login from "./pages/Login";
-
-// import Profile from "./pages/UserProfile";  // ✅ FIX
-
-// import AdminDashboard from "./pages/AdminDashboard";
-// import AddProperty from "./pages/AddProperty";
-// import AdminProfile from "./pages/AdminProfile";
-// import AddListing from "./pages/AddListing";
-// import About from "./pages/About";        // ✅ ADD
-// import Contact from "./pages/Contact";    // ✅ ADD
-// import AddListingDetails from "./pages/AddListingDetails";
-// import AdminRoute from "./components/AdminRoute";
-// import ProtectedRoute from "./components/ProtectedRoute";
-
-// function App() {
-//   return (
-//     <BrowserRouter>
-//       <Routes>
-
-//         {/* 🌍 PUBLIC ROUTES */}
-//         <Route path="/" element={<LandingPage />} />
-//         <Route path="/properties" element={<Properties />} />
-//         <Route path="/about" element={<About />} />       {/* ✅ FIX */}
-//         <Route path="/contact" element={<Contact />} />   {/* ✅ FIX */}
-//         <Route path="/login" element={<Login />} />
-// <Route path="/add-listing" element={<AddListing />} />
-// <Route path="/add-listing-details" element={<AddListingDetails />} />
-//         {/* 👤 USER PROFILE */}
-//         <Route
-//           path="/profile"
-//           element={
-//             <ProtectedRoute>
-//               <Profile />
-//             </ProtectedRoute>
-//           }
-//         />
-
-//         {/* 🛠️ ADMIN DASHBOARD */}
-//         <Route
-//           path="/admin"
-//           element={
-//             <AdminRoute>
-//               <AdminDashboard />
-//             </AdminRoute>
-//           }
-//         />
-
-//         {/* 🛠️ ADMIN PROFILE */}
-//         <Route
-//           path="/admin/profile"
-//           element={
-//             <AdminRoute>
-//               <AdminProfile />
-//             </AdminRoute>
-//           }
-//         />
-
-//         {/* ➕ ADD PROPERTY (ADMIN ONLY) */}
-//         <Route
-//           path="/add-property"
-//           element={
-//             <AdminRoute>
-//               <AddProperty />
-//             </AdminRoute>
-//           }
-//         />
-
-//         {/* ❌ 404 */}
-//         <Route
-//           path="*"
-//           element={
-//             <div className="h-screen flex items-center justify-center text-xl">
-//               404 - Page Not Found
-//             </div>
-//           }
-//         />
-
-//       </Routes>
-//     </BrowserRouter>
-//   );
-// }
-
-// export default App;
-
-
-
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 /* 🌍 PUBLIC */
@@ -97,6 +6,7 @@ import Properties from "./pages/Properties";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Login from "./pages/Login";
+import Register from "./pages/Register";
 import ReferralPage from "./pages/ReferralPage";
 import Checkout from "./pages/Checkout";
 
@@ -113,7 +23,7 @@ import AdminProfile from "./pages/AdminProfile";
 /* 📦 PROPERTY */
 import AddListing from "./pages/AddListing";
 import AddListingDetails from "./pages/AddListingDetails";
-
+import PropertyDetails from "./pages/PropertyDetails";
 /* 🔐 ROUTES */
 import AdminRoute from "./components/AdminRoute";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -123,25 +33,26 @@ function App() {
     <BrowserRouter>
       <Routes>
 
-        {/* 🌍 PUBLIC ROUTES */}
+        {/* 🌍 PUBLIC */}
         <Route path="/" element={<LandingPage />} />
         <Route path="/properties" element={<Properties />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
 
-        {/* PAYMENT / REFERRAL */}
+        {/* PAYMENT */}
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/referral" element={<ReferralPage />} />
 
-        {/* PROPERTY FLOW */}
+        {/* PROPERTY */}
         <Route path="/add-listing" element={<AddListing />} />
         <Route path="/add-listing-details" element={<AddListingDetails />} />
-
+<Route path="/property/:id" element={<PropertyDetails />} />
         {/* SUBSCRIPTION */}
         <Route path="/subscription" element={<Subscription />} />
 
-        {/* 👤 USER PROTECTED */}
+        {/* 👤 USER */}
         <Route
           path="/profile"
           element={
