@@ -235,6 +235,241 @@
 
 
 
+// import { useState, useEffect, useRef } from "react";
+// import { Link, useNavigate, useLocation } from "react-router-dom";
+// import { Menu, X, Search } from "lucide-react";
+// import properties from "../data/properties";
+
+// export default function Navbar() {
+//   const navigate = useNavigate();
+//   const location = useLocation();
+
+//   const [menuOpen, setMenuOpen] = useState(false);
+//   const [openLocation, setOpenLocation] = useState(false);
+//   const [search, setSearch] = useState("");
+
+//   const locationRef = useRef();
+
+//   const isAuth = localStorage.getItem("token");
+
+//   // 🔥 PROFILE ROUTE
+//   const goToProfile = () => {
+//     const role = localStorage.getItem("role");
+
+//     if (!isAuth) return navigate("/login");
+
+//     if (role === "admin") {
+//       navigate("/admin/profile");
+//     } else {
+//       navigate("/profile");
+//     }
+
+//     setMenuOpen(false);
+//   };
+
+//   // click outside search
+//   useEffect(() => {
+//     const handler = (e) => {
+//       if (locationRef.current && !locationRef.current.contains(e.target)) {
+//         setOpenLocation(false);
+//       }
+//     };
+//     document.addEventListener("mousedown", handler);
+//     return () => document.removeEventListener("mousedown", handler);
+//   }, []);
+
+//   const isActive = (path) => location.pathname === path;
+
+//   const filteredProperties = properties.filter((item) =>
+//     `${item.name} ${item.location} ${item.address}`
+//       .toLowerCase()
+//       .includes(search.toLowerCase())
+//   );
+
+//   const navItem = "transition font-bold hover:text-pink-600";
+
+//   return (
+//     <nav className="w-full bg-gradient-to-r from-pink-50 to-white shadow-md border-b border-pink-200 px-4 md:px-10 py-4 sticky top-0 z-50">
+
+//       <div className="flex items-center justify-between">
+
+//         {/* LOGO */}
+//         <h1 className="text-3xl font-extrabold text-pink-600">
+//           HomeFinder
+//         </h1>
+
+//         {/* DESKTOP MENU */}
+//         <ul className="hidden md:flex gap-8 text-lg font-bold text-gray-800 items-center">
+
+//           <Link
+//             to="/"
+//             className={`${navItem} ${isActive("/") ? "text-pink-600" : ""}`}
+//           >
+//             Home
+//           </Link>
+
+//           <Link
+//             to="/properties"
+//             className={`${navItem} ${isActive("/properties") ? "text-pink-600" : ""}`}
+//           >
+//             Properties
+//           </Link>
+
+//           <Link
+//             to="/about"
+//             className={`${navItem} ${isActive("/about") ? "text-pink-600" : ""}`}
+//           >
+//             About
+//           </Link>
+
+//           <Link
+//             to="/contact"
+//             className={`${navItem} ${isActive("/contact") ? "text-pink-600" : ""}`}
+//           >
+//             Contact
+//           </Link>
+
+//           {/* PROFILE */}
+//           {isAuth ? (
+//             <button
+//               onClick={goToProfile}
+//               className="text-pink-600 font-bold"
+//             >
+//               My Profile
+//             </button>
+//           ) : (
+//             <Link to="/login" className="hover:text-pink-600">
+//               Login
+//             </Link>
+//           )}
+
+//         </ul>
+
+//         {/* SEARCH + MOBILE */}
+//         <div className="flex items-center gap-4">
+
+//           {/* SEARCH */}
+//           <div className="relative hidden md:block w-[250px]" ref={locationRef}>
+
+//             <div className="flex items-center gap-2 border border-pink-200 px-4 py-2 rounded-full bg-white">
+//               <Search size={18} />
+//               <input
+//                 type="text"
+//                 placeholder="Search property..."
+//                 value={search}
+//                 onChange={(e) => {
+//                   setSearch(e.target.value);
+//                   setOpenLocation(true);
+//                 }}
+//                 className="w-full outline-none text-sm"
+//               />
+//             </div>
+
+//             {/* DROPDOWN */}
+//             {openLocation && (
+//               <div className="absolute right-0 top-14 w-full bg-white shadow-xl rounded-xl p-3 z-50">
+
+//                 {filteredProperties.length > 0 ? (
+//                   filteredProperties.map((item, i) => (
+//                     <Link
+//                       key={i}
+//                       to="/properties"
+//                       className="block p-3 border-b hover:bg-pink-50 rounded"
+//                     >
+//                       <h4 className="font-bold text-sm">{item.name}</h4>
+//                       <p className="text-xs text-gray-500">
+//                         {item.location} - {item.address}
+//                       </p>
+//                     </Link>
+//                   ))
+//                 ) : (
+//                   <p className="text-center text-gray-400 py-4">
+//                     No property found
+//                   </p>
+//                 )}
+
+//               </div>
+//             )}
+//           </div>
+
+//           {/* MOBILE MENU */}
+//           <button onClick={() => setMenuOpen(true)} className="md:hidden">
+//             <Menu size={30} />
+//           </button>
+
+//         </div>
+//       </div>
+
+//       {/* FULL SCREEN MOBILE MENU */}
+//       <div
+//         className={`fixed inset-0 bg-white z-50 flex flex-col transition-transform duration-300
+//         ${menuOpen ? "translate-x-0" : "-translate-x-full"}`}
+//       >
+
+//         {/* HEADER */}
+//         <div className="flex justify-between items-center p-5 border-b">
+//           <h1 className="text-2xl font-bold text-pink-600">Menu</h1>
+//           <X size={30} onClick={() => setMenuOpen(false)} />
+//         </div>
+
+//         {/* MENU ITEMS */}
+//         <div className="flex flex-col p-6 space-y-6 text-xl font-bold">
+
+//           <Link
+//             to="/"
+//             onClick={() => setMenuOpen(false)}
+//             className={isActive("/") ? "text-pink-600" : ""}
+//           >
+//             Home
+//           </Link>
+
+//           <Link
+//             to="/properties"
+//             onClick={() => setMenuOpen(false)}
+//             className={isActive("/properties") ? "text-pink-600" : ""}
+//           >
+//             Properties
+//           </Link>
+
+//           <Link
+//             to="/about"
+//             onClick={() => setMenuOpen(false)}
+//             className={isActive("/about") ? "text-pink-600" : ""}
+//           >
+//             About
+//           </Link>
+
+//           <Link
+//             to="/contact"
+//             onClick={() => setMenuOpen(false)}
+//             className={isActive("/contact") ? "text-pink-600" : ""}
+//           >
+//             Contact
+//           </Link>
+
+//           {/* PROFILE */}
+//           {isAuth ? (
+//             <button
+//               onClick={goToProfile}
+//               className="text-pink-600 text-left"
+//             >
+//               My Profile
+//             </button>
+//           ) : (
+//             <Link to="/login" onClick={() => setMenuOpen(false)}>
+//               Login
+//             </Link>
+//           )}
+
+//         </div>
+
+//       </div>
+//     </nav>
+//   );
+// }
+
+
+
 import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Menu, X, Search } from "lucide-react";
@@ -252,22 +487,15 @@ export default function Navbar() {
 
   const isAuth = localStorage.getItem("token");
 
-  // 🔥 PROFILE ROUTE
   const goToProfile = () => {
     const role = localStorage.getItem("role");
 
     if (!isAuth) return navigate("/login");
 
-    if (role === "admin") {
-      navigate("/admin/profile");
-    } else {
-      navigate("/profile");
-    }
-
+    navigate(role === "admin" ? "/admin/profile" : "/profile");
     setMenuOpen(false);
   };
 
-  // click outside search
   useEffect(() => {
     const handler = (e) => {
       if (locationRef.current && !locationRef.current.contains(e.target)) {
@@ -286,54 +514,45 @@ export default function Navbar() {
       .includes(search.toLowerCase())
   );
 
-  const navItem = "transition font-bold hover:text-pink-600";
-
   return (
-    <nav className="w-full bg-gradient-to-r from-pink-50 to-white shadow-md border-b border-pink-200 px-4 md:px-10 py-4 sticky top-0 z-50">
+    <nav className="w-full sticky top-0 z-50 
+    bg-white/60 backdrop-blur-xl 
+    border-b border-white/30 
+    shadow-lg">
 
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between px-4 md:px-10 py-4">
 
         {/* LOGO */}
-        <h1 className="text-3xl font-extrabold text-pink-600">
+        <h1 className="text-2xl md:text-3xl font-extrabold 
+        text-transparent bg-clip-text 
+        bg-gradient-to-r from-pink-500 to-purple-600">
           HomeFinder
         </h1>
 
         {/* DESKTOP MENU */}
-        <ul className="hidden md:flex gap-8 text-lg font-bold text-gray-800 items-center">
+        <ul className="hidden md:flex items-center gap-8 text-gray-700 font-semibold">
 
-          <Link
-            to="/"
-            className={`${navItem} ${isActive("/") ? "text-pink-600" : ""}`}
-          >
-            Home
-          </Link>
+          {["/", "/properties", "/about", "/contact"].map((path, i) => (
+            <Link
+              key={i}
+              to={path}
+              className={`relative px-3 py-1 rounded-xl transition 
+              hover:text-pink-600
+              ${isActive(path) ? "text-pink-600" : ""}`}
+            >
+              {path === "/" ? "Home" :
+                path.replace("/", "").charAt(0).toUpperCase() + path.slice(2)}
 
-          <Link
-            to="/properties"
-            className={`${navItem} ${isActive("/properties") ? "text-pink-600" : ""}`}
-          >
-            Properties
-          </Link>
+              {isActive(path) && (
+                <span className="absolute left-0 bottom-0 w-full h-[2px] bg-pink-500 rounded-full" />
+              )}
+            </Link>
+          ))}
 
-          <Link
-            to="/about"
-            className={`${navItem} ${isActive("/about") ? "text-pink-600" : ""}`}
-          >
-            About
-          </Link>
-
-          <Link
-            to="/contact"
-            className={`${navItem} ${isActive("/contact") ? "text-pink-600" : ""}`}
-          >
-            Contact
-          </Link>
-
-          {/* PROFILE */}
           {isAuth ? (
             <button
               onClick={goToProfile}
-              className="text-pink-600 font-bold"
+              className="px-4 py-2 rounded-xl bg-pink-500 text-white shadow-md hover:scale-105 transition"
             >
               My Profile
             </button>
@@ -342,48 +561,54 @@ export default function Navbar() {
               Login
             </Link>
           )}
-
         </ul>
 
         {/* SEARCH + MOBILE */}
         <div className="flex items-center gap-4">
 
           {/* SEARCH */}
-          <div className="relative hidden md:block w-[250px]" ref={locationRef}>
+          <div ref={locationRef} className="hidden md:block relative">
 
-            <div className="flex items-center gap-2 border border-pink-200 px-4 py-2 rounded-full bg-white">
-              <Search size={18} />
+            <div className="flex items-center gap-2 
+            px-4 py-2 rounded-full 
+            bg-white/70 backdrop-blur-lg 
+            border border-white/40 shadow-md">
+
+              <Search size={18} className="text-gray-500" />
+
               <input
-                type="text"
-                placeholder="Search property..."
                 value={search}
                 onChange={(e) => {
                   setSearch(e.target.value);
                   setOpenLocation(true);
                 }}
-                className="w-full outline-none text-sm"
+                placeholder="Search property..."
+                className="outline-none text-sm bg-transparent"
               />
             </div>
 
             {/* DROPDOWN */}
             {openLocation && (
-              <div className="absolute right-0 top-14 w-full bg-white shadow-xl rounded-xl p-3 z-50">
+              <div className="absolute top-14 right-0 w-72 
+              bg-white/80 backdrop-blur-xl 
+              border border-white/30 
+              shadow-xl rounded-2xl overflow-hidden">
 
                 {filteredProperties.length > 0 ? (
                   filteredProperties.map((item, i) => (
                     <Link
                       key={i}
                       to="/properties"
-                      className="block p-3 border-b hover:bg-pink-50 rounded"
+                      className="block p-3 hover:bg-pink-50 transition"
                     >
-                      <h4 className="font-bold text-sm">{item.name}</h4>
+                      <p className="font-semibold text-sm">{item.name}</p>
                       <p className="text-xs text-gray-500">
-                        {item.location} - {item.address}
+                        {item.location}
                       </p>
                     </Link>
                   ))
                 ) : (
-                  <p className="text-center text-gray-400 py-4">
+                  <p className="p-4 text-center text-gray-400">
                     No property found
                   </p>
                 )}
@@ -392,78 +617,48 @@ export default function Navbar() {
             )}
           </div>
 
-          {/* MOBILE MENU */}
-          <button onClick={() => setMenuOpen(true)} className="md:hidden">
-            <Menu size={30} />
+          {/* MOBILE BUTTON */}
+          <button
+            onClick={() => setMenuOpen(true)}
+            className="md:hidden p-2 rounded-xl bg-white/70 shadow"
+          >
+            <Menu size={26} />
           </button>
 
         </div>
       </div>
 
-      {/* FULL SCREEN MOBILE MENU */}
-      <div
-        className={`fixed inset-0 bg-white z-50 flex flex-col transition-transform duration-300
-        ${menuOpen ? "translate-x-0" : "-translate-x-full"}`}
-      >
+      {/* MOBILE MENU */}
+      <div className={`fixed inset-0 bg-black/30 backdrop-blur-md z-50 transition 
+      ${menuOpen ? "block" : "hidden"}`}>
 
-        {/* HEADER */}
-        <div className="flex justify-between items-center p-5 border-b">
-          <h1 className="text-2xl font-bold text-pink-600">Menu</h1>
-          <X size={30} onClick={() => setMenuOpen(false)} />
+        <div className="absolute right-0 top-0 w-[80%] h-full 
+        bg-white/90 backdrop-blur-xl shadow-xl p-6">
+
+          <div className="flex justify-between items-center mb-8">
+            <h2 className="text-xl font-bold text-pink-600">Menu</h2>
+            <X onClick={() => setMenuOpen(false)} />
+          </div>
+
+          <div className="flex flex-col gap-6 text-lg font-semibold">
+
+            <Link to="/" onClick={() => setMenuOpen(false)}>Home</Link>
+            <Link to="/properties" onClick={() => setMenuOpen(false)}>Properties</Link>
+            <Link to="/about" onClick={() => setMenuOpen(false)}>About</Link>
+            <Link to="/contact" onClick={() => setMenuOpen(false)}>Contact</Link>
+
+            {isAuth ? (
+              <button onClick={goToProfile} className="text-pink-600 text-left">
+                My Profile
+              </button>
+            ) : (
+              <Link to="/login">Login</Link>
+            )}
+
+          </div>
         </div>
-
-        {/* MENU ITEMS */}
-        <div className="flex flex-col p-6 space-y-6 text-xl font-bold">
-
-          <Link
-            to="/"
-            onClick={() => setMenuOpen(false)}
-            className={isActive("/") ? "text-pink-600" : ""}
-          >
-            Home
-          </Link>
-
-          <Link
-            to="/properties"
-            onClick={() => setMenuOpen(false)}
-            className={isActive("/properties") ? "text-pink-600" : ""}
-          >
-            Properties
-          </Link>
-
-          <Link
-            to="/about"
-            onClick={() => setMenuOpen(false)}
-            className={isActive("/about") ? "text-pink-600" : ""}
-          >
-            About
-          </Link>
-
-          <Link
-            to="/contact"
-            onClick={() => setMenuOpen(false)}
-            className={isActive("/contact") ? "text-pink-600" : ""}
-          >
-            Contact
-          </Link>
-
-          {/* PROFILE */}
-          {isAuth ? (
-            <button
-              onClick={goToProfile}
-              className="text-pink-600 text-left"
-            >
-              My Profile
-            </button>
-          ) : (
-            <Link to="/login" onClick={() => setMenuOpen(false)}>
-              Login
-            </Link>
-          )}
-
-        </div>
-
       </div>
+
     </nav>
   );
 }
