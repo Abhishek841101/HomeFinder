@@ -8,6 +8,8 @@ import OverlapCards from "../components/OverlapCards";
 import Testimonials from "../components/Testimonials"; // ✅ ADD
 import Footer from "../components/Footer";
 import PricingSection from "../components/PricingSection";
+
+import ServiceGrid from "../components/ServiceGrid";
 import VerifiedRentals from "../components/VerifiedRentals";
 export default function LandingPage() {
   return (
@@ -21,6 +23,7 @@ export default function LandingPage() {
 
       {/* FEATURE CARDS */}
       <OverlapCards />
+      <ServiceGrid />
       <VerifiedRentals />
 <PricingSection />
       {/* 🔥 TESTIMONIALS */}
