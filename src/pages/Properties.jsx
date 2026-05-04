@@ -461,7 +461,6 @@
 //   );
 // }
 
-
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import PropertyCard from "../components/PropertyCard";
@@ -519,7 +518,7 @@ export default function Properties() {
 
       <Navbar />
 
-      {/* 🔥 GLASS FILTER BAR */}
+      {/* FILTER BAR */}
       <div className="w-full px-6 py-4 backdrop-blur-xl bg-white/5 border-b border-white/10 shadow-lg">
         <div className="flex flex-wrap items-center gap-4">
 
@@ -557,7 +556,7 @@ export default function Properties() {
             ))}
           </div>
 
-          {/* DROPDOWN */}
+          {/* DROPDOWNS */}
           <Dropdown
             label={type}
             open={openDropdown === "type"}
@@ -597,7 +596,6 @@ export default function Properties() {
             }}
           />
 
-          {/* BUTTON */}
           <button className="px-6 py-2.5 rounded-xl font-semibold 
           bg-gradient-to-r from-purple-600 to-indigo-500 
           shadow-lg hover:shadow-2xl hover:scale-105 transition">
@@ -621,10 +619,14 @@ export default function Properties() {
 
         {loading && <p>Loading...</p>}
 
+        {/* ✅ FIXED GRID */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filtered.map((item) => (
-            <div className="transition hover:-translate-y-2 hover:scale-[1.02] duration-300">
-              <PropertyCard key={item._id} item={item} />
+          {filtered.map((item, index) => (
+            <div
+              key={item._id || item.id || index}   // ✅ FIX HERE
+              className="transition hover:-translate-y-2 hover:scale-[1.02] duration-300"
+            >
+              <PropertyCard item={item} />
             </div>
           ))}
         </div>
@@ -636,7 +638,7 @@ export default function Properties() {
   );
 }
 
-/* 🔥 PREMIUM DROPDOWN */
+/* DROPDOWN */
 function Dropdown({ label, open, onClick, options, onSelect }) {
   return (
     <div className="relative">
@@ -654,9 +656,9 @@ function Dropdown({ label, open, onClick, options, onSelect }) {
         <div className="absolute top-12 left-0 w-44 
         bg-[#0f172a]/90 backdrop-blur-xl border border-white/10 
         shadow-2xl rounded-xl z-50 overflow-hidden">
-          {options.map((opt) => (
+          {options.map((opt, i) => (
             <button
-              key={opt}
+              key={opt + i}   // ✅ SAFE KEY
               onClick={() => onSelect(opt)}
               className="w-full text-left px-4 py-2 text-sm 
               hover:bg-white/10 transition"
