@@ -1,199 +1,127 @@
-import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import Footer from "../components/Footer";
+import {
+  FaCar,
+  FaTruckPickup,
+  FaTaxi,
+  FaBus,
+  FaCarSide,
+  FaShuttleVan,
+  FaMotorcycle,
+  FaAmbulance,
+  FaTruck,
+} from "react-icons/fa";
 
 export default function CarHire() {
-  const [search, setSearch] = useState("");
+  const navigate = useNavigate();
 
-  // ✅ FIX: scroll to top on page open
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  const cars = [
-    {
-      name: "Toyota Innova Crysta",
-      desc: "Comfortable family & long trip car",
-      image:
-        "https://images.unsplash.com/photo-1542362567-b07e54358753?auto=format&fit=crop&w=800&q=60",
-      location: "Chennai",
-      rating: 4.7,
-      price: "₹3500/day",
-      type: "SUV",
-      fuel: "Diesel",
-      seats: 7,
-      verified: true,
-    },
-    {
-      name: "Hyundai i20",
-      desc: "Compact hatchback for city rides",
-      image:
-        "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?auto=format&fit=crop&w=800&q=60",
-      location: "Bangalore",
-      rating: 4.4,
-      price: "₹1800/day",
-      type: "Hatchback",
-      fuel: "Petrol",
-      seats: 5,
-      verified: true,
-    },
-    {
-      name: "Maruti Swift Dzire",
-      desc: "Affordable sedan for daily travel",
-      image:
-        "https://images.unsplash.com/photo-1621007947382-bb3c2f3e6a11?auto=format&fit=crop&w=800&q=60",
-      location: "Delhi",
-      rating: 4.3,
-      price: "₹2000/day",
-      type: "Sedan",
-      fuel: "Petrol",
-      seats: 5,
-      verified: false,
-    },
-    {
-      name: "Mahindra Thar",
-      desc: "Off-road adventure SUV",
-      image:
-        "https://images.unsplash.com/photo-1619767886558-efdc259cde1a?auto=format&fit=crop&w=800&q=60",
-      location: "Jaipur",
-      rating: 4.8,
-      price: "₹4000/day",
-      type: "SUV",
-      fuel: "Diesel",
-      seats: 4,
-      verified: true,
-    },
-    {
-      name: "Honda City",
-      desc: "Premium sedan with comfort ride",
-      image:
-        "https://images.unsplash.com/photo-1606611013016-969c19d8a1c8?auto=format&fit=crop&w=800&q=60",
-      location: "Mumbai",
-      rating: 4.6,
-      price: "₹2500/day",
-      type: "Sedan",
-      fuel: "Petrol",
-      seats: 5,
-      verified: true,
-    },
+  const categories = [
+    { name: "SUV", icon: <FaCar />, slug: "suv" },
+    { name: "Sedan", icon: <FaTaxi />, slug: "sedan" },
+    { name: "Hatchback", icon: <FaCarSide />, slug: "hatchback" },
+    { name: "Luxury", icon: <FaCar />, slug: "luxury" },
+    { name: "Pickup", icon: <FaTruckPickup />, slug: "pickup" },
+    { name: "Bus", icon: <FaBus />, slug: "bus" },
+
+    { name: "Mini Car", icon: <FaCar />, slug: "mini" },
+    { name: "Electric Car", icon: <FaCarSide />, slug: "electric" },
+    { name: "Self Drive", icon: <FaCar />, slug: "selfdrive" },
+    { name: "With Driver", icon: <FaTaxi />, slug: "driver" },
+    { name: "Outstation", icon: <FaShuttleVan />, slug: "outstation" },
+    { name: "Airport Pickup", icon: <FaShuttleVan />, slug: "airport" },
+    { name: "Bike Rental", icon: <FaMotorcycle />, slug: "bike" },
+    { name: "Ambulance", icon: <FaAmbulance />, slug: "ambulance" },
+    { name: "Tempo Traveller", icon: <FaBus />, slug: "tempo" },
+    { name: "Truck Rental", icon: <FaTruck />, slug: "truck" },
+    { name: "Wedding Cars", icon: <FaCar />, slug: "wedding" },
+    { name: "Tourist Vans", icon: <FaShuttleVan />, slug: "tourist" },
+    { name: "Corporate Travel", icon: <FaCarSide />, slug: "corporate" },
+    { name: "Monthly Rental", icon: <FaTaxi />, slug: "monthly" },
+    { name: "Hourly Rental", icon: <FaTaxi />, slug: "hourly" },
+    { name: "Luxury Bus", icon: <FaBus />, slug: "luxurybus" },
   ];
 
-  const filtered = cars.filter((item) => {
-    const q = search.toLowerCase();
-    return (
-      item.name.toLowerCase().includes(q) ||
-      item.type.toLowerCase().includes(q) ||
-      item.location.toLowerCase().includes(q)
-    );
-  });
-
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div className="min-h-screen bg-gray-100 flex flex-col">
 
-      {/* HEADER */}
-      <div className="sticky top-0 z-20 bg-white/90 backdrop-blur-md shadow-sm px-4 py-4">
-
+      {/* 🔥 HEADER */}
+      <div className="sticky top-0 bg-white shadow px-4 py-4 z-20 backdrop-blur">
         <h1 className="text-xl md:text-2xl font-bold text-center text-gray-800">
-          Car Hire 🚗
+          Car Categories 🚗
         </h1>
+      </div>
 
-        {/* SEARCH */}
-        <div className="mt-3 relative max-w-2xl mx-auto">
+      {/* 🔥 HERO */}
+      <div className="bg-gradient-to-r from-blue-600 to-indigo-500 text-white text-center py-8 px-4">
+        <h2 className="text-lg md:text-xl font-semibold">
+          Find Your Perfect Ride 🚘
+        </h2>
+        <p className="text-sm opacity-90 mt-1">
+          Book cars, bikes, buses & more instantly
+        </p>
+
+        {/* 🔥 SEARCH BAR (NEW ADD) */}
+        <div className="mt-4 max-w-xl mx-auto">
           <input
             type="text"
-            placeholder="Search car, type, city..."
-            className="w-full border border-gray-200 rounded-full pl-10 pr-4 py-3 outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search car type (SUV, Sedan...)"
+            className="w-full px-4 py-2 rounded-full text-black outline-none shadow"
+            onChange={(e) => {
+              const val = e.target.value.toLowerCase();
+              const match = categories.find((c) =>
+                c.name.toLowerCase().includes(val)
+              );
+              if (match) navigate(`/cars/${match.slug}`);
+            }}
           />
-          <span className="absolute left-3 top-3.5 text-gray-400">
-            🔍
-          </span>
         </div>
       </div>
 
-      {/* GRID */}
-      <div className="flex-1 px-4 py-6">
+      {/* 🔥 GRID */}
+      <div className="flex-1 px-4 py-8 max-w-6xl mx-auto 
+        grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
 
-        {filtered.length === 0 ? (
-          <div className="text-center mt-16">
-            <p className="text-gray-500 text-lg">No cars found 😕</p>
-            <p className="text-sm text-gray-400 mt-1">
-              Try SUV, Sedan, Hatchback or city name
+        {categories.map((cat, i) => (
+          <div
+            key={i}
+            onClick={() => navigate(`/cars/${cat.slug}`)}
+            className="bg-white rounded-2xl shadow-md p-5 flex flex-col items-center cursor-pointer 
+            hover:shadow-xl hover:-translate-y-1 transition group active:scale-95"
+          >
+            <div className="text-3xl text-blue-600 mb-3 group-hover:scale-110 transition">
+              {cat.icon}
+            </div>
+
+            <p className="font-semibold text-gray-700 text-center text-sm">
+              {cat.name}
             </p>
           </div>
-        ) : (
-          <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        ))}
 
-            {filtered.map((car, i) => (
-              <div
-                key={i}
-                className="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-              >
-
-                {/* IMAGE */}
-                <div className="relative">
-                  <img
-                    src={car.image}
-                    alt={car.name}
-                    className="w-full h-44 object-cover"
-                    onError={(e) =>
-                      (e.target.src =
-                        "https://via.placeholder.com/400x300?text=No+Image")
-                    }
-                  />
-
-                  {/* RATING */}
-                  <span className="absolute top-2 right-2 bg-white text-yellow-600 text-xs px-2 py-1 rounded-full shadow">
-                    ⭐ {car.rating}
-                  </span>
-
-                  {/* VERIFIED */}
-                  {car.verified && (
-                    <span className="absolute top-2 left-2 bg-green-500 text-white text-xs px-2 py-1 rounded-full shadow">
-                      ✔ Verified
-                    </span>
-                  )}
-                </div>
-
-                {/* CONTENT */}
-                <div className="p-4">
-
-                  <span className="text-xs bg-blue-100 text-blue-600 px-2 py-1 rounded-full">
-                    {car.type}
-                  </span>
-
-                  <h2 className="text-lg font-semibold text-gray-800 mt-2">
-                    {car.name}
-                  </h2>
-
-                  <p className="text-sm text-gray-500 mt-1">
-                    {car.desc}
-                  </p>
-
-                  <div className="flex justify-between text-xs text-gray-500 mt-2">
-                    <span>⛽ {car.fuel}</span>
-                    <span>🪑 {car.seats} Seats</span>
-                  </div>
-
-                  <div className="flex justify-between text-xs text-gray-500 mt-1">
-                    <span>📍 {car.location}</span>
-                    <span className="text-green-600 font-semibold">
-                      {car.price}
-                    </span>
-                  </div>
-
-                  <button className="mt-4 w-full bg-gradient-to-r from-blue-600 to-blue-500 text-white py-2 rounded-xl hover:opacity-90 active:scale-95 transition">
-                    Book Now
-                  </button>
-
-                </div>
-              </div>
-            ))}
-
-          </div>
-        )}
       </div>
 
+      {/* 🔥 PROMO */}
+      <div className="max-w-6xl mx-auto px-4 pb-6">
+        <div className="bg-gradient-to-r from-green-400 to-emerald-500 text-white p-5 rounded-xl shadow flex flex-col sm:flex-row justify-between items-center gap-3">
+          <div>
+            <h2 className="font-bold text-lg">🔥 Special Offer</h2>
+            <p className="text-sm">Flat ₹500 OFF on first booking</p>
+          </div>
+          <button
+            onClick={() => navigate("/cars/suv")}
+            className="bg-white text-black px-5 py-2 rounded-lg hover:scale-105 transition"
+          >
+            Book Now
+          </button>
+        </div>
+      </div>
+
+      {/* 🔥 FOOTER */}
       <Footer />
     </div>
   );

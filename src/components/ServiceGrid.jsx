@@ -1,141 +1,3 @@
-// import {
-//   FaHandshake,
-//   FaUserMd,
-//   FaPlane,
-//   FaCar,
-//   FaPaintBrush,
-//   FaUsers,
-//   FaDumbbell,
-//   FaGraduationCap,
-//   FaBox,
-//   FaTools,
-//   FaKey,
-//   FaUserTie,
-//   FaMoneyBill,
-//   FaHome,
-//   FaBed,
-//   FaChevronDown,
-// } from "react-icons/fa";
-
-// const services = [
-//   { name: "B2B", icon: <FaHandshake /> },
-//   { name: "Doctors", icon: <FaUserMd /> },
-//   { name: "Travel", icon: <FaPlane /> },
-//   { name: "Car Hire", icon: <FaCar /> },
-
-//   { name: "Beauty", icon: <FaPaintBrush /> },
-//   { name: "Wedding Planning", icon: <FaUsers /> },
-//   { name: "Gym", icon: <FaDumbbell /> },
-//   { name: "Education", icon: <FaGraduationCap /> },
-
-//   { name: "Packers & Movers", icon: <FaBox /> },
-//   { name: "Repairs & Services", icon: <FaTools /> },
-//   { name: "Rent or Hire", icon: <FaKey /> },
-//   { name: "Jobs", icon: <FaUserTie /> },
-
-//   { name: "Loans", icon: <FaMoneyBill /> },
-//   { name: "Real Estate", icon: <FaHome /> },
-//   { name: "PG/Hostel", icon: <FaBed /> },
-//   { name: "Show More", icon: <FaChevronDown /> },
-// ];
-
-// export default function ServiceGrid() {
-//   return (
-//     <div className="w-full max-w-6xl mx-auto px-4 py-8">
-
-//       {/* 🔲 GRID */}
-//       <div className="
-//         grid 
-//         grid-cols-4 
-//         sm:grid-cols-5 
-//         md:grid-cols-6 
-//         gap-y-6 
-//         gap-x-4 
-//         text-center
-//       ">
-//         {services.map((item, i) => (
-//           <div
-//             key={i}
-//             className="flex flex-col items-center group cursor-pointer"
-//           >
-//             {/* Icon Circle */}
-//             <div className="
-//               w-14 h-14 
-//               md:w-16 md:h-16 
-//               flex items-center justify-center 
-//               bg-white 
-//               rounded-full 
-//               shadow-md 
-//               text-blue-600 
-//               text-lg md:text-xl
-//               transition-all duration-300
-//               group-hover:scale-110 
-//               group-hover:shadow-lg
-//             ">
-//               {item.icon}
-//             </div>
-
-//             {/* Label */}
-//             <p className="
-//               text-xs md:text-sm 
-//               font-medium 
-//               mt-2 
-//               text-gray-800 
-//               leading-tight
-//               group-hover:text-blue-600
-//             ">
-//               {item.name}
-//             </p>
-//           </div>
-//         ))}
-//       </div>
-
-//       {/* 📢 BANNER */}
-//       <div className="
-//         mt-8 
-//         border 
-//         rounded-xl 
-//         p-4 
-//         flex 
-//         flex-col sm:flex-row 
-//         items-start sm:items-center 
-//         justify-between 
-//         gap-3
-//         bg-white
-//         shadow-sm
-//       ">
-//         {/* Left */}
-//         <div className="flex items-center gap-2 flex-wrap">
-//           <span className="text-gray-800 font-semibold text-sm md:text-base">
-//             List your business
-//           </span>
-
-//           <span className="bg-red-500 text-white text-xs px-2 py-0.5 rounded">
-//             Free
-//           </span>
-//         </div>
-
-//         {/* Button */}
-//         <button className="
-//           bg-blue-600 
-//           text-white 
-//           px-5 py-2 
-//           rounded-lg 
-//           font-medium 
-//           hover:bg-blue-700 
-//           transition
-//           w-full sm:w-auto
-//         ">
-//           Start Now
-//         </button>
-//       </div>
-
-//     </div>
-//   );
-// }
-
-
-
 import {
   FaHandshake,
   FaUserMd,
@@ -153,12 +15,15 @@ import {
   FaHome,
   FaBed,
   FaChevronDown,
+  FaSearch, // ✅ NEW
 } from "react-icons/fa";
 
 import { useNavigate } from "react-router-dom";
+import { useState } from "react"; // ✅ NEW
 
 export default function ServiceGrid() {
   const navigate = useNavigate();
+  const [search, setSearch] = useState(""); // ✅ state
 
   const services = [
     { name: "B2B", icon: <FaHandshake />, slug: "b2b" },
@@ -182,13 +47,30 @@ export default function ServiceGrid() {
     { name: "Show More", icon: <FaChevronDown />, slug: "more" },
   ];
 
+  // ✅ Filter logic
+  const filteredServices = services.filter((item) =>
+    item.name.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
     <div className="w-full max-w-7xl mx-auto px-4 py-12">
 
+      {/* 🔍 SEARCH BOX */}
+      <div className="mb-8 flex items-center bg-white shadow-md rounded-xl px-4 py-3">
+        <FaSearch className="text-gray-400 mr-3" />
+        <input
+          type="text"
+          placeholder="Search services like doctors, gym, jobs..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="w-full outline-none text-gray-700"
+        />
+      </div>
+
       {/* 🔥 TITLE */}
-      <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-8 text-center">
+      {/* <h2 className="text-xl md:text-2xl font-bold text-gray-800 mb-8 text-center">
         Explore Services
-      </h2>
+      </h2> */}
 
       {/* 🔲 GRID */}
       <div
@@ -203,17 +85,16 @@ export default function ServiceGrid() {
         text-center
       "
       >
-        {services.map((item, i) => (
+        {filteredServices.map((item, i) => (
           <button
             key={i}
-            onClick={() => navigate(`/${item.slug}`)}   // ✅ FIXED HERE
+            onClick={() => navigate(`/${item.slug}`)}
             className="
               flex flex-col items-center 
               group cursor-pointer
               transition outline-none
             "
           >
-            {/* ICON */}
             <div
               className="
               w-20 h-20 
@@ -236,7 +117,6 @@ export default function ServiceGrid() {
               {item.icon}
             </div>
 
-            {/* LABEL */}
             <p
               className="
               text-sm md:text-base 
